@@ -33,7 +33,7 @@ export const CONTENT_ITEMS: ContentItem[] = [
     durationMinutes: 5,
     reason: "Because you follow the Raptors",
     thumbnailGradient: ["#8a0f32", "#ce1141"],
-    videoUrl: "/videos/barnes-highlights.mkv",
+    videoUrl: "/videos/barnes-highlights.mp4",
   },
   // Continue Watching
   // Because you follow both teams

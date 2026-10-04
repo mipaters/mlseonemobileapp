@@ -1,4 +1,4 @@
-import { Home, PlayCircle, Ticket, Award, Sparkles } from "lucide-react";
+import { Home, PlayCircle, Ticket, Award, Sparkles, Network } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 const ITEMS = [
@@ -7,12 +7,13 @@ const ITEMS = [
   { to: "/gameday", label: "Game Day", icon: Ticket },
   { to: "/rewards", label: "Rewards", icon: Award },
   { to: "/cito", label: "Cito", icon: Sparkles },
+  { to: "/architecture", label: "Architecture", icon: Network },
 ];
 
 export function BottomNav() {
   return (
     <nav
-      className="safe-bottom sticky bottom-0 z-30 bg-navy-900/95 backdrop-blur border-t border-white/10 grid grid-cols-5"
+      className="safe-bottom sticky bottom-0 z-30 bg-navy-900/95 backdrop-blur border-t border-white/10 grid grid-cols-6"
       aria-label="Primary"
     >
       {ITEMS.map(({ to, label, icon: Icon }) => (

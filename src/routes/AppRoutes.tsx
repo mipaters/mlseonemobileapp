@@ -10,6 +10,7 @@ import { AgentActivityPage } from "../pages/profile/AgentActivityPage";
 import { PrivacyPage } from "../pages/profile/PrivacyPage";
 import { ExecutiveViewPage } from "../pages/ExecutiveViewPage";
 import { ArchitecturePage } from "../pages/ArchitecturePage";
+import { DeploymentArchitecturePage } from "../pages/DeploymentArchitecturePage";
 
 export function AppRoutes() {
   return (
@@ -26,6 +27,7 @@ export function AppRoutes() {
       <Route path="/profile/privacy" element={<PrivacyPage />} />
       <Route path="/executive" element={<ExecutiveViewPage />} />
       <Route path="/executive/architecture" element={<ArchitecturePage />} />
+      <Route path="/architecture" element={<DeploymentArchitecturePage />} />
       <Route path="*" element={<Navigate to="/home" replace />} />
     </Routes>
   );
