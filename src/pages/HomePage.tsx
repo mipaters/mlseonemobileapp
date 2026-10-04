@@ -12,6 +12,7 @@ import { ArenaExperienceBanner } from "../components/home/ArenaExperienceBanner"
 import { PartnerOffersSection } from "../components/home/PartnerOffersSection";
 import { AskCitoBanner } from "../components/home/AskCitoBanner";
 import copilotLogo from "../assets/microsoft-copilot-logo.png";
+import weekendHeroImage from "../assets/leafs-weekend-hero.png";
 import { CONTENT_ROWS, CONTENT_ITEMS, contentById } from "../data/content";
 import { MIKE_PROFILE } from "../data/profile";
 import { gameByTeam } from "../data/gameDay";
@@ -54,28 +55,34 @@ export function HomePage() {
           Your Leafs and Jays world, personalized by Microsoft Copilot.
         </p>
 
-        <div className="mt-4 rounded-2xl overflow-hidden border border-white/10 bg-gradient-to-br from-leafs-700 via-navy-800 to-jays-700 p-4">
-          <p className="text-xs uppercase tracking-wide text-accent-gold font-semibold">Your Toronto Sports Weekend</p>
-          <div className="mt-2 space-y-1 text-sm text-silver-100">
-            {leafsGame && (
-              <p>
-                🍁 Leafs vs {leafsGame.opponent} — {leafsGame.dateLabel}, {leafsGame.timeLabel}
-              </p>
-            )}
-            {jaysGame && (
-              <p>
-                ⚾ Jays vs {jaysGame.opponent} — {jaysGame.dateLabel}, {jaysGame.timeLabel}
-              </p>
-            )}
-            <p className="text-silver-400">Recommended: {activeMission.name} · +{activeMission.pointsReward} pts</p>
-          </div>
-          <div className="flex gap-2 mt-4">
-            <Button size="sm" onClick={() => navigate("/gameday")}>
-              See My Weekend
-            </Button>
-            <Button size="sm" variant="secondary" onClick={() => navigate("/cito")}>
-              <Sparkles size={14} className="inline mr-1 -mt-0.5" /> Ask Cito
-            </Button>
+        <div
+          className="relative mt-4 rounded-2xl overflow-hidden border border-white/10 bg-cover bg-center p-4"
+          style={{ backgroundImage: `url(${weekendHeroImage})` }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-t from-navy-950/95 via-navy-950/55 to-navy-950/20" />
+          <div className="relative">
+            <p className="text-xs uppercase tracking-wide text-accent-gold font-semibold">Your Toronto Sports Weekend</p>
+            <div className="mt-2 space-y-1 text-sm text-silver-100">
+              {leafsGame && (
+                <p>
+                  🍁 Leafs vs {leafsGame.opponent} — {leafsGame.dateLabel}, {leafsGame.timeLabel}
+                </p>
+              )}
+              {jaysGame && (
+                <p>
+                  ⚾ Jays vs {jaysGame.opponent} — {jaysGame.dateLabel}, {jaysGame.timeLabel}
+                </p>
+              )}
+              <p className="text-silver-400">Recommended: {activeMission.name} · +{activeMission.pointsReward} pts</p>
+            </div>
+            <div className="flex gap-2 mt-4">
+              <Button size="sm" onClick={() => navigate("/gameday")}>
+                See My Weekend
+              </Button>
+              <Button size="sm" variant="secondary" onClick={() => navigate("/cito")}>
+                <Sparkles size={14} className="inline mr-1 -mt-0.5" /> Ask Cito
+              </Button>
+            </div>
           </div>
         </div>
 
