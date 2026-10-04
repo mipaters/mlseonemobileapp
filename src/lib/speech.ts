@@ -41,10 +41,38 @@ async function getSpeechToken(): Promise<{ token: string; region: string }> {
   return tokenCache;
 }
 
+let activeRecognizer: SpeechSDK.SpeechRecognizer | null = null;
+let activeSynthesizer: SpeechSDK.SpeechSynthesizer | null = null;
+
+/**
+ * Immediately stops and closes any in-flight recognition or speech
+ * synthesis. Used to implement a "mute" control that cuts off both the
+ * mic and Cito's voice right away.
+ */
+export function stopActiveSpeech(): void {
+  if (activeRecognizer) {
+    try {
+      activeRecognizer.close();
+    } catch {
+      // ignore - already closing/closed
+    }
+    activeRecognizer = null;
+  }
+  if (activeSynthesizer) {
+    try {
+      activeSynthesizer.close();
+    } catch {
+      // ignore - already closing/closed
+    }
+    activeSynthesizer = null;
+  }
+}
+
 /**
  * Captures a single utterance from the default microphone and returns the
- * recognized text. Rejects with `SpeechApiError` if Speech isn't configured,
- * the mic is unavailable, or recognition fails/times out.
+ * recognized text (empty string if nothing/silence was detected). Rejects
+ * with `SpeechApiError` if Speech isn't configured, the mic is unavailable,
+ * or recognition genuinely fails.
  */
 export async function recognizeSpeechOnce(): Promise<string> {
   const { token, region } = await getSpeechToken();
@@ -60,20 +88,24 @@ export async function recognizeSpeechOnce(): Promise<string> {
   }
 
   const recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
+  activeRecognizer = recognizer;
 
   return new Promise<string>((resolve, reject) => {
     recognizer.recognizeOnceAsync(
       (result) => {
+        if (activeRecognizer === recognizer) activeRecognizer = null;
         recognizer.close();
         if (result.reason === SpeechSDK.ResultReason.RecognizedSpeech && result.text) {
           resolve(result.text);
         } else if (result.reason === SpeechSDK.ResultReason.NoMatch) {
-          reject(new SpeechApiError("No speech could be recognized."));
+          // Silence / nothing understood — not an error, just nothing said.
+          resolve("");
         } else {
           reject(new SpeechApiError(`Speech recognition failed (reason: ${result.reason}).`));
         }
       },
       (err) => {
+        if (activeRecognizer === recognizer) activeRecognizer = null;
         recognizer.close();
         reject(new SpeechApiError(`Speech recognition error: ${err}`));
       }
@@ -92,11 +124,13 @@ export async function speakText(text: string): Promise<void> {
   speechConfig.speechSynthesisVoiceName = "en-US-AndrewMultilingualNeural";
 
   const synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig);
+  activeSynthesizer = synthesizer;
 
   return new Promise<void>((resolve, reject) => {
     synthesizer.speakTextAsync(
       text,
       (result) => {
+        if (activeSynthesizer === synthesizer) activeSynthesizer = null;
         synthesizer.close();
         if (result.reason === SpeechSDK.ResultReason.SynthesizingAudioCompleted) {
           resolve();
@@ -105,6 +139,7 @@ export async function speakText(text: string): Promise<void> {
         }
       },
       (err) => {
+        if (activeSynthesizer === synthesizer) activeSynthesizer = null;
         synthesizer.close();
         reject(new SpeechApiError(`Speech synthesis error: ${err}`));
       }

@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Bot, Mic, Minimize2, Send, Sparkles, Volume2, VolumeX } from "lucide-react";
+import { Bot, Mic, MicOff, Minimize2, Send, Sparkles, Volume2, VolumeX } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CITO_GREETING, SUGGESTED_PROMPTS, matchIntent, type CitoJourney } from "../lib/citoEngine";
 import { fetchCitoReply, CitoApiError } from "../lib/citoApi";
-import { recognizeSpeechOnce, speakText, SpeechApiError } from "../lib/speech";
+import { recognizeSpeechOnce, speakText, stopActiveSpeech, SpeechApiError } from "../lib/speech";
 import { useAppState } from "../store/AppState";
 import type { CitoMessage } from "../types";
 import { Button } from "../components/ui/Button";
@@ -22,8 +22,6 @@ import {
   CitoWatchSuggestionsCard,
   CitoWeekendCard,
 } from "../components/cito/JourneyCards";
-
-const SAMPLE_VOICE_PROMPT = "What's happening this weekend?";
 
 function createMessageId() {
   return globalThis.crypto?.randomUUID?.() ?? `msg-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
@@ -137,7 +135,10 @@ export function CitoPage() {
   const [isThinking, setIsThinking] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [pendingJourney, setPendingJourney] = useState<CitoJourney | null>(null);
-  const [voiceRepliesEnabled, setVoiceRepliesEnabled] = useState(false);
+  const [voiceRepliesEnabled, setVoiceRepliesEnabled] = useState(true);
+  const [isVoiceModeOn, setIsVoiceModeOn] = useState(false);
+  const voiceModeRef = useRef(false);
+  const listenLoopRef = useRef<() => Promise<void>>(() => Promise.resolve());
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const seededRef = useRef(false);
@@ -166,6 +167,8 @@ export function CitoPage() {
   useEffect(() => {
     return () => {
       timersRef.current.forEach((timer) => window.clearTimeout(timer));
+      voiceModeRef.current = false;
+      stopActiveSpeech();
     };
   }, []);
 
@@ -181,11 +184,13 @@ export function CitoPage() {
     timersRef.current.push(timer);
   };
 
-  const speakIfEnabled = (text: string) => {
+  const speakIfEnabled = async (text: string) => {
     if (!voiceRepliesEnabled) return;
-    speakText(text).catch((err) => {
+    try {
+      await speakText(text);
+    } catch (err) {
       console.warn("Cito speech playback unavailable:", err);
-    });
+    }
   };
 
   const handleSend = async (text: string) => {
@@ -244,33 +249,72 @@ export function CitoPage() {
       timestamp: createTimestamp(),
     });
     actions.addAgentActivity(agentDetails.agent, agentDetails.activity);
-    speakIfEnabled(replyText);
+    await speakIfEnabled(replyText);
   };
 
-  const handleVoiceInput = async () => {
-    if (isThinking || isListening) return;
+  const stopVoiceConversation = (toastMessage?: string) => {
+    voiceModeRef.current = false;
+    setIsVoiceModeOn(false);
+    setIsListening(false);
+    stopActiveSpeech();
+    setInputValue("");
+    if (toastMessage) {
+      actions.showToast(toastMessage);
+    }
+  };
+
+  const listenLoop = async () => {
+    if (!voiceModeRef.current) return;
 
     setIsListening(true);
     setInputValue("Listening…");
 
+    let transcript = "";
     try {
-      const transcript = await recognizeSpeechOnce();
-      setIsListening(false);
-      if (transcript) {
-        setInputValue(transcript);
-        void handleSend(transcript);
-      } else {
-        setInputValue("");
-      }
+      transcript = await recognizeSpeechOnce();
     } catch (err) {
       if (!(err instanceof SpeechApiError)) {
         console.error("Unexpected speech recognition error:", err);
       }
-      setIsListening(false);
-      actions.showToast("Live voice input isn't available right now — showing a sample question instead.");
-      setInputValue(SAMPLE_VOICE_PROMPT);
-      void handleSend(SAMPLE_VOICE_PROMPT);
+      stopVoiceConversation("Voice conversation stopped — live voice input isn't available right now.");
+      return;
     }
+
+    if (!voiceModeRef.current) {
+      // Muted while we were listening.
+      setIsListening(false);
+      return;
+    }
+
+    setIsListening(false);
+
+    if (transcript) {
+      setInputValue(transcript);
+      await handleSend(transcript);
+    } else {
+      setInputValue("");
+    }
+
+    if (voiceModeRef.current) {
+      // Call through the ref (not the closure above) so the next turn always
+      // uses the freshest handleSend/state instead of the render that started the loop.
+      void listenLoopRef.current();
+    }
+  };
+
+  listenLoopRef.current = listenLoop;
+
+  const toggleVoiceConversation = () => {
+    if (voiceModeRef.current) {
+      stopVoiceConversation();
+      return;
+    }
+
+    if (isThinking) return;
+
+    voiceModeRef.current = true;
+    setIsVoiceModeOn(true);
+    void listenLoopRef.current();
   };
 
   const renderCardForJourney = (journey: string | undefined, promptText: string, messageId: string) => {
@@ -396,23 +440,25 @@ export function CitoPage() {
         <div className="mt-2 flex items-end gap-2">
           <button
             type="button"
-            aria-label={isListening ? "Listening" : "Ask with your voice"}
-            onClick={handleVoiceInput}
-            disabled={isThinking || isListening}
+            aria-label={isVoiceModeOn ? "Mute Cito and stop listening" : "Start voice conversation"}
+            onClick={toggleVoiceConversation}
+            disabled={isThinking && !isVoiceModeOn}
             className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border transition ${
-              isListening
-                ? "border-accent-gold bg-accent-gold text-navy-950"
+              isVoiceModeOn
+                ? isListening
+                  ? "border-accent-gold bg-accent-gold text-navy-950 animate-pulse"
+                  : "border-accent-gold bg-accent-gold/20 text-accent-gold"
                 : "border-white/10 bg-white/5 text-silver-200 hover:bg-white/10"
             } disabled:cursor-not-allowed disabled:opacity-50`}
           >
-            <Mic size={18} />
+            {isVoiceModeOn ? <MicOff size={18} /> : <Mic size={18} />}
           </button>
 
           <div className="flex-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
             <input
               ref={inputRef}
               value={inputValue}
-              disabled={isThinking}
+              disabled={isThinking || isVoiceModeOn}
               onChange={(event) => setInputValue(event.target.value)}
               onKeyDown={(event) => {
                 if (event.key === "Enter") {
