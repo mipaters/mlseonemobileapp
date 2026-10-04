@@ -24,6 +24,17 @@ export const CONTENT_ITEMS: ContentItem[] = [
     thumbnailGradient: ["#0a3d7a", "#1c5ca3"],
     videoUrl: "/videos/jayshighlights.mp4",
   },
+  {
+    id: "barnes-highlights",
+    title: "Scottie Barnes: Highlight Reel",
+    teamId: "both",
+    category: "Goals",
+    description: "Scottie Barnes' best plays, dunks and defence in one highlight reel.",
+    durationMinutes: 5,
+    reason: "Because you follow the Raptors",
+    thumbnailGradient: ["#8a0f32", "#ce1141"],
+    videoUrl: "/videos/barnes-highlights.mkv",
+  },
   // Continue Watching
   // Because you follow both teams
   {
@@ -124,7 +135,7 @@ export const CONTENT_ROWS: { id: string; title: string; itemIds: string[] }[] = 
   {
     id: "forYou",
     title: "For You",
-    itemIds: ["leafs-gameday-preview", "matthews-top-goals"],
+    itemIds: ["leafs-gameday-preview", "matthews-top-goals", "barnes-highlights"],
   },
   {
     id: "becauseYouFollowBoth",
