@@ -10,6 +10,7 @@ import { StandingsSection, ScoringLeadersSection } from "../components/home/Stan
 import { TeamNewsSection } from "../components/home/TeamNewsSection";
 import { ArenaExperienceBanner } from "../components/home/ArenaExperienceBanner";
 import { PartnerOffersSection } from "../components/home/PartnerOffersSection";
+import { MerchandiseSpecialsSection } from "../components/home/MerchandiseSpecialsSection";
 import { AskCitoBanner } from "../components/home/AskCitoBanner";
 import copilotLogo from "../assets/microsoft-copilot-logo.png";
 import weekendHeroImage from "../assets/leafs-weekend-hero.png";
@@ -108,6 +109,7 @@ export function HomePage() {
       <StandingsSection />
       <ScoringLeadersSection />
       <TeamNewsSection />
+      <MerchandiseSpecialsSection />
       <PartnerOffersSection />
       <AskCitoBanner />
 
