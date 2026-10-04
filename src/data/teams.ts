@@ -19,6 +19,15 @@ export const TEAMS: Team[] = [
     colorFrom: "#0e2f63",
     colorTo: "#1c5ca3",
   },
+  {
+    id: "raptors",
+    name: "Toronto Raptors",
+    shortName: "RAPTORS",
+    sport: "Basketball",
+    venue: "Scotiabank Arena",
+    colorFrom: "#8a0f32",
+    colorTo: "#ce1141",
+  },
 ];
 
 export const PLAYERS: Player[] = [

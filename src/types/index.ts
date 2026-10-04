@@ -4,10 +4,10 @@
 export type TeamId = "leafs" | "jays";
 
 export interface Team {
-  id: TeamId;
+  id: TeamId | "raptors";
   name: string;
   shortName: string;
-  sport: "Hockey" | "Baseball";
+  sport: "Hockey" | "Baseball" | "Basketball";
   venue: string;
   colorFrom: string;
   colorTo: string;
@@ -166,7 +166,7 @@ export interface StandingsRow {
 }
 
 export interface StandingsTable {
-  teamId: TeamId;
+  teamId: TeamId | "raptors";
   league: string;
   division: string;
   rows: StandingsRow[];
@@ -179,14 +179,14 @@ export interface ScoringLeader {
 }
 
 export interface ScoringLeaderboard {
-  teamId: TeamId;
+  teamId: TeamId | "raptors";
   heading: string;
   leaders: ScoringLeader[];
 }
 
 export interface TeamNewsStory {
   id: string;
-  teamId: TeamId;
+  teamId: TeamId | "raptors";
   headline: string;
   source: string;
   timeAgo: string;

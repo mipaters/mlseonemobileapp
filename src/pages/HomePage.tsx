@@ -52,8 +52,8 @@ export function HomePage() {
           {timeOfDayGreeting()}, {MIKE_PROFILE.name.split(" ")[0]}
         </p>
         <p className="flex items-center gap-1.5 text-sm text-silver-400 mt-0.5">
-          <img src={copilotLogo} alt="Microsoft Copilot" className="h-4 w-4" />
-          Your Leafs and Jays world, personalized by Microsoft Copilot.
+          Your Leafs, Jays and Raptors world, personalized by Microsoft Copilot.
+          <img src={copilotLogo} alt="Microsoft Copilot" className="h-4 w-4 shrink-0" />
         </p>
 
         <div

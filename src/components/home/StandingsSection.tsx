@@ -11,7 +11,7 @@ export function StandingsSection() {
           <div key={table.teamId} className="shrink-0 w-[260px] rounded-2xl border border-white/10 bg-navy-800 p-3">
             <div className="flex items-baseline justify-between gap-2">
               <h3 className="font-display text-base font-semibold uppercase tracking-tight text-white">
-                {teamById(table.teamId)?.shortName === "LEAFS" ? "Maple Leafs" : "Blue Jays"}
+                {teamById(table.teamId)?.name}
               </h3>
               <span className="text-[10px] text-silver-500 uppercase tracking-wide shrink-0">
                 {table.league} · {table.division}
@@ -54,7 +54,7 @@ export function ScoringLeadersSection() {
         {SCORING_LEADERS.map((board) => (
           <div key={board.teamId} className="shrink-0 w-[260px] rounded-2xl border border-white/10 bg-navy-800 p-3">
             <h3 className="font-display text-base font-semibold uppercase tracking-tight text-white">
-              {board.teamId === "leafs" ? "Maple Leafs" : "Blue Jays"}
+              {teamById(board.teamId)?.name}
             </h3>
             <p className="text-[10px] text-silver-500 uppercase tracking-wide">{board.heading}</p>
             <ol className="mt-2 space-y-2">

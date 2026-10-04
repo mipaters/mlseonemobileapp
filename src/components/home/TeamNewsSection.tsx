@@ -1,5 +1,6 @@
 import { Newspaper, ExternalLink } from "lucide-react";
 import { TEAM_NEWS } from "../../data/standings";
+import { teamById } from "../../data/teams";
 import { SectionHeader } from "../ui/SectionHeader";
 
 export function TeamNewsSection() {
@@ -21,7 +22,7 @@ export function TeamNewsSection() {
             <div className="min-w-0 flex-1">
               <p className="text-sm font-semibold text-white leading-snug">{story.headline}</p>
               <p className="text-[11px] text-silver-500 mt-0.5 uppercase tracking-wide">
-                {story.teamId === "leafs" ? "Maple Leafs" : "Blue Jays"} · {story.source} · {story.timeAgo}
+                {teamById(story.teamId)?.name} · {story.source} · {story.timeAgo}
               </p>
             </div>
             <ExternalLink size={14} className="text-silver-500 shrink-0" />
