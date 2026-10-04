@@ -1,0 +1,17 @@
+{
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/assets/*", "/icons.svg", "*.{png,jpg,jpeg,svg,gif,ico,webp,css,js,json,txt,woff,woff2}"]
+  },
+  "routes": [
+    {
+      "route": "/*",
+      "headers": {
+        "Cache-Control": "no-cache"
+      }
+    }
+  ],
+  "mimeTypes": {
+    ".json": "application/json"
+  }
+}

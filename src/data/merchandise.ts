@@ -1,0 +1,81 @@
+import type { MerchandiseItem } from "../types";
+
+export const MERCHANDISE: MerchandiseItem[] = [
+  {
+    id: "matthews-jersey",
+    teamId: "leafs",
+    name: "Matthews Authentic Jersey",
+    category: "Jersey",
+    price: 189,
+    reason: "Because Matthews is your favourite Leafs player",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["Blue", "White"],
+    image: ["#00204e", "#0a3d7a"],
+  },
+  {
+    id: "leafs-quarter-zip",
+    teamId: "leafs",
+    name: "Leafs Quarter Zip",
+    category: "Apparel",
+    price: 95,
+    reason: "Because you watched three Leafs recaps this week",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["Navy", "Grey"],
+    image: ["#182742", "#233455"],
+  },
+  {
+    id: "vladdy-jersey",
+    teamId: "jays",
+    name: "Guerrero Jr. Authentic Jersey",
+    category: "Jersey",
+    price: 179,
+    reason: "Because Guerrero Jr. is your favourite Jays player",
+    sizes: ["S", "M", "L", "XL"],
+    colors: ["Blue", "White"],
+    image: ["#134a8a", "#1c5ca3"],
+  },
+  {
+    id: "jays-cap",
+    teamId: "jays",
+    name: "Jays Classic Cap",
+    category: "Headwear",
+    price: 42,
+    reason: "Because you saved a Guerrero Jr. highlight",
+    sizes: ["One Size"],
+    colors: ["Blue", "Grey"],
+    image: ["#0e2f63", "#9aa3b2"],
+  },
+  {
+    id: "toronto-crossover-hoodie",
+    teamId: "both",
+    name: "Toronto Crossover Hoodie",
+    category: "Apparel",
+    price: 110,
+    reason: "Because you follow both teams",
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    colors: ["Navy"],
+    image: ["#00204e", "#134a8a"],
+  },
+  {
+    id: "leafs-winter-hat",
+    teamId: "leafs",
+    name: "Leafs Winter Hat",
+    category: "Headwear",
+    price: 38,
+    reason: "Recommended for game-day weather",
+    sizes: ["One Size"],
+    colors: ["Blue"],
+    image: ["#00204e", "#9aa3b2"],
+  },
+];
+
+export const merchById = (id: string) => MERCHANDISE.find((m) => m.id === id);
+
+export const MERCH_SECTIONS: { id: string; title: string; itemIds: string[] }[] = [
+  { id: "recommended", title: "Recommended for Mike", itemIds: ["vladdy-jersey", "matthews-jersey", "toronto-crossover-hoodie"] },
+  { id: "leafs", title: "Leafs Essentials", itemIds: ["matthews-jersey", "leafs-quarter-zip", "leafs-winter-hat"] },
+  { id: "jays", title: "Jays Essentials", itemIds: ["vladdy-jersey", "jays-cap"] },
+  { id: "gameday", title: "Game-Day Gear", itemIds: ["leafs-winter-hat", "jays-cap", "toronto-crossover-hoodie"] },
+  { id: "players", title: "Favourite Players", itemIds: ["matthews-jersey", "vladdy-jersey"] },
+  { id: "limited", title: "Limited Drops", itemIds: ["toronto-crossover-hoodie"] },
+];

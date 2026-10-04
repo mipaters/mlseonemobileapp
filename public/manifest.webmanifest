@@ -1,0 +1,25 @@
+{
+  "name": "MLSE One",
+  "short_name": "MLSE One",
+  "description": "MLSE One — a fictional concept demo of a unified Toronto Maple Leafs + Blue Jays + Raptors fan app with Ask Cito.",
+  "start_url": "/home",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#090d14",
+  "theme_color": "#090d14",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
