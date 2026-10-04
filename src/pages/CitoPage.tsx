@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Bot, Mic, Minimize2, Send, Sparkles } from "lucide-react";
+import { Bot, Mic, Minimize2, Send, Sparkles, Volume2, VolumeX } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CITO_GREETING, SUGGESTED_PROMPTS, matchIntent, type CitoJourney } from "../lib/citoEngine";
+import { fetchCitoReply, CitoApiError } from "../lib/citoApi";
+import { recognizeSpeechOnce, speakText, SpeechApiError } from "../lib/speech";
 import { useAppState } from "../store/AppState";
 import type { CitoMessage } from "../types";
 import { Button } from "../components/ui/Button";
@@ -135,6 +137,7 @@ export function CitoPage() {
   const [isThinking, setIsThinking] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [pendingJourney, setPendingJourney] = useState<CitoJourney | null>(null);
+  const [voiceRepliesEnabled, setVoiceRepliesEnabled] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const seededRef = useRef(false);
@@ -178,7 +181,14 @@ export function CitoPage() {
     timersRef.current.push(timer);
   };
 
-  const handleSend = (text: string) => {
+  const speakIfEnabled = (text: string) => {
+    if (!voiceRepliesEnabled) return;
+    speakText(text).catch((err) => {
+      console.warn("Cito speech playback unavailable:", err);
+    });
+  };
+
+  const handleSend = async (text: string) => {
     const trimmed = text.trim();
     if (!trimmed || isThinking || isListening) return;
 
@@ -189,6 +199,11 @@ export function CitoPage() {
       timestamp: createTimestamp(),
     };
 
+    const historyForApi = state.citoHistory.slice(-8).map((entry) => ({
+      role: (entry.role === "user" ? "user" : "assistant") as "user" | "assistant",
+      content: entry.text,
+    }));
+
     actions.addCitoMessage(userMessage);
     actions.addSignal(`Asked Cito: ${trimmed}`);
     setInputValue("");
@@ -198,31 +213,64 @@ export function CitoPage() {
     setPendingJourney(journey);
     setIsThinking(true);
 
-    scheduleTimer(() => {
-      setIsThinking(false);
-      setPendingJourney(null);
-      actions.addCitoMessage({
-        id: createMessageId(),
-        role: "cito",
-        text: responseForJourney(journey),
-        cardId: journey,
-        timestamp: createTimestamp(),
-      });
-      actions.addAgentActivity(agentDetails.agent, agentDetails.activity);
-    }, 760);
+    const minThinkingDelay = new Promise<void>((resolve) => scheduleTimer(resolve, 500));
+
+    let replyText: string;
+    try {
+      const [aiReply] = await Promise.all([
+        fetchCitoReply({
+          message: trimmed,
+          journeyHint: journey === "fallback" ? null : journey,
+          history: historyForApi,
+        }),
+        minThinkingDelay,
+      ]);
+      replyText = aiReply;
+    } catch (err) {
+      if (!(err instanceof CitoApiError)) {
+        console.error("Unexpected Cito API error:", err);
+      }
+      await minThinkingDelay;
+      replyText = responseForJourney(journey);
+    }
+
+    setIsThinking(false);
+    setPendingJourney(null);
+    actions.addCitoMessage({
+      id: createMessageId(),
+      role: "cito",
+      text: replyText,
+      cardId: journey,
+      timestamp: createTimestamp(),
+    });
+    actions.addAgentActivity(agentDetails.agent, agentDetails.activity);
+    speakIfEnabled(replyText);
   };
 
-  const handleVoiceDemo = () => {
+  const handleVoiceInput = async () => {
     if (isThinking || isListening) return;
 
     setIsListening(true);
     setInputValue("Listening…");
 
-    scheduleTimer(() => {
+    try {
+      const transcript = await recognizeSpeechOnce();
       setIsListening(false);
+      if (transcript) {
+        setInputValue(transcript);
+        void handleSend(transcript);
+      } else {
+        setInputValue("");
+      }
+    } catch (err) {
+      if (!(err instanceof SpeechApiError)) {
+        console.error("Unexpected speech recognition error:", err);
+      }
+      setIsListening(false);
+      actions.showToast("Live voice input isn't available right now — showing a sample question instead.");
       setInputValue(SAMPLE_VOICE_PROMPT);
-      handleSend(SAMPLE_VOICE_PROMPT);
-    }, 900);
+      void handleSend(SAMPLE_VOICE_PROMPT);
+    }
   };
 
   const renderCardForJourney = (journey: string | undefined, promptText: string, messageId: string) => {
@@ -269,6 +317,20 @@ export function CitoPage() {
             <Minimize2 size={14} className="mr-1 inline" />
             Minimize
           </Button>
+        </div>
+        <div className="mt-3">
+          <button
+            type="button"
+            onClick={() => setVoiceRepliesEnabled((value) => !value)}
+            className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition ${
+              voiceRepliesEnabled
+                ? "border-accent-gold bg-accent-gold/15 text-accent-gold"
+                : "border-white/10 bg-white/5 text-silver-300 hover:bg-white/10"
+            }`}
+          >
+            {voiceRepliesEnabled ? <Volume2 size={14} /> : <VolumeX size={14} />}
+            Cito speaks replies: {voiceRepliesEnabled ? "On" : "Off"}
+          </button>
         </div>
       </header>
 
@@ -334,8 +396,8 @@ export function CitoPage() {
         <div className="mt-2 flex items-end gap-2">
           <button
             type="button"
-            aria-label={isListening ? "Listening" : "Use voice demo"}
-            onClick={handleVoiceDemo}
+            aria-label={isListening ? "Listening" : "Ask with your voice"}
+            onClick={handleVoiceInput}
             disabled={isThinking || isListening}
             className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border transition ${
               isListening
