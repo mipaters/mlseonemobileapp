@@ -43,13 +43,10 @@ export interface ContentItem {
   reason: string;
   thumbnailGradient: [string, string];
   chapters?: string[];
+  videoUrl?: string;
 }
 
-export type ContentRowId =
-  | "forYou"
-  | "continueWatching"
-  | "becauseYouFollowBoth"
-  | "recommendedExperiences";
+export type ContentRowId = "forYou" | "becauseYouFollowBoth" | "recommendedExperiences";
 
 export interface Game {
   id: string;
@@ -156,6 +153,44 @@ export interface DigitalLockerItem {
   name: string;
   type: "Merchandise" | "Ticket Stub" | "Badge" | "Highlight" | "Experience";
   teamId?: TeamId | "both";
+}
+
+export interface StandingsRow {
+  team: string;
+  abbreviation: string;
+  gamesPlayed: number;
+  wins: number;
+  losses: number;
+  points: number;
+  isUserTeam?: boolean;
+}
+
+export interface StandingsTable {
+  teamId: TeamId;
+  league: string;
+  division: string;
+  rows: StandingsRow[];
+}
+
+export interface ScoringLeader {
+  name: string;
+  statLine: string;
+  primaryStat: string;
+}
+
+export interface ScoringLeaderboard {
+  teamId: TeamId;
+  heading: string;
+  leaders: ScoringLeader[];
+}
+
+export interface TeamNewsStory {
+  id: string;
+  teamId: TeamId;
+  headline: string;
+  source: string;
+  timeAgo: string;
+  url: string;
 }
 
 export type LoyaltyTier = "Bronze" | "Silver" | "Gold" | "Platinum" | "Legend";

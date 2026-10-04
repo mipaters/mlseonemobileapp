@@ -16,10 +16,11 @@ export function MobileApp() {
 
   const isExecutive = location.pathname.startsWith("/executive");
   const isCito = location.pathname === "/cito";
+  const isHome = location.pathname === "/" || location.pathname === "/home";
 
   return (
     <div className="relative flex h-full w-full flex-col bg-navy-950 text-silver-100">
-      {!isExecutive && <MobileHeader onAvatarClick={() => setProfileOpen(true)} />}
+      {!isExecutive && <MobileHeader onAvatarClick={() => setProfileOpen(true)} hideLogo={isHome} />}
       <main className="flex-1 overflow-y-auto overscroll-contain">
         <AppRoutes />
       </main>

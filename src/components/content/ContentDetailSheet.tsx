@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { Heart, Bookmark, EyeOff, Sparkles, Play } from "lucide-react";
 import type { ContentItem } from "../../types";
 import { Sheet } from "../ui/Sheet";
@@ -9,6 +10,7 @@ import { teamById } from "../../data/teams";
 export function ContentDetailSheet({ item, onClose }: { item: ContentItem | null | undefined; onClose: () => void }) {
   const { state, actions } = useAppState();
   const navigate = useNavigate();
+  const [isPlaying, setIsPlaying] = useState(false);
 
   if (!item) return null;
 
@@ -24,20 +26,36 @@ export function ContentDetailSheet({ item, onClose }: { item: ContentItem | null
     actions.showToast(`Added "${item.title}" to your watch history`);
   }
 
+  function handlePlay() {
+    if (item?.videoUrl) {
+      setIsPlaying(true);
+    }
+    markWatchedAndSignal();
+  }
+
   return (
     <Sheet open={!!item} onClose={onClose} title={item.category}>
-      <div
-        className="h-36 rounded-2xl flex items-center justify-center mb-4"
-        style={{ background: `linear-gradient(135deg, ${item.thumbnailGradient[0]}, ${item.thumbnailGradient[1]})` }}
-      >
-        <button
-          onClick={markWatchedAndSignal}
-          aria-label="Play"
-          className="h-14 w-14 rounded-full bg-black/40 flex items-center justify-center"
+      {isPlaying && item.videoUrl ? (
+        <video
+          src={item.videoUrl}
+          controls
+          autoPlay
+          className="w-full h-36 rounded-2xl bg-black mb-4 object-contain"
+        />
+      ) : (
+        <div
+          className="h-36 rounded-2xl flex items-center justify-center mb-4"
+          style={{ background: `linear-gradient(135deg, ${item.thumbnailGradient[0]}, ${item.thumbnailGradient[1]})` }}
         >
-          <Play size={26} className="text-white" />
-        </button>
-      </div>
+          <button
+            onClick={handlePlay}
+            aria-label="Play"
+            className="h-14 w-14 rounded-full bg-black/40 flex items-center justify-center"
+          >
+            <Play size={26} className="text-white" />
+          </button>
+        </div>
+      )}
       <h3 className="text-lg font-bold text-white">{item.title}</h3>
       <p className="text-xs text-silver-500 mt-1">
         {team ? team.name : "Leafs & Jays"} · {item.category}
@@ -47,7 +65,7 @@ export function ContentDetailSheet({ item, onClose }: { item: ContentItem | null
       <p className="text-xs text-accent-gold mt-2">Why you're seeing this: {item.reason}</p>
 
       <div className="grid grid-cols-2 gap-2 mt-4">
-        <Button size="sm" onClick={markWatchedAndSignal}>
+        <Button size="sm" onClick={handlePlay}>
           <Play size={14} className="inline mr-1 -mt-0.5" /> Watch
         </Button>
         <Button

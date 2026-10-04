@@ -262,7 +262,7 @@ export function CitoPage() {
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-gold">Ask Cito</p>
-            <h1 className="mt-1 text-2xl font-bold text-white">Your Toronto sports concierge</h1>
+            <h1 className="mt-1 font-display text-2xl font-semibold uppercase tracking-tight text-white">Your Toronto sports concierge</h1>
             <p className="mt-1 text-sm text-silver-300">Chat with Cito for game day, highlights, rewards, tickets, and more.</p>
           </div>
           <Button size="sm" variant="ghost" onClick={() => navigate("/home")}>

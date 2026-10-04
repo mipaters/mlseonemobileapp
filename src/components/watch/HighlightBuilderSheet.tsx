@@ -61,7 +61,7 @@ const STEP_TITLES = [
 ] as const;
 
 const STEP_DESCRIPTIONS = [
-  "Tell SportsIQ which Toronto story should anchor your reel.",
+  "Tell Copilot which Toronto story should anchor your reel.",
   "Pick the stars or team-wide moments you want featured.",
   "Select the content mix for your highlight package.",
   "Choose how long your reel should run.",
@@ -170,7 +170,7 @@ export function HighlightBuilderSheet({ open, onClose }: HighlightBuilderSheetPr
   }, [onClose, resetBuilder]);
 
   const activeTitle =
-    mode === "generating" ? "SportsIQ is building your reel" : mode === "complete" ? "Your reel is ready" : "Build My Highlight Reel";
+    mode === "generating" ? "Copilot is building your reel" : mode === "complete" ? "Your reel is ready" : "Build My Highlight Reel";
 
   return (
     <Sheet open={open} onClose={handleClose} title={activeTitle}>
@@ -297,7 +297,7 @@ export function HighlightBuilderSheet({ open, onClose }: HighlightBuilderSheetPr
       {mode === "generating" && (
         <div className="space-y-4">
           <div className="rounded-3xl border border-accent-gold/20 bg-gradient-to-br from-leafs-700/40 via-navy-900 to-jays-700/40 p-5">
-            <p className="text-sm text-silver-200">SportsIQ is turning your selections into a personalized Toronto highlight experience.</p>
+            <p className="text-sm text-silver-200">Copilot is turning your selections into a personalized Toronto highlight experience.</p>
           </div>
           <div className="space-y-3">
             {GENERATION_PHASES.map((phase, index) => {

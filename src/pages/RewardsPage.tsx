@@ -72,7 +72,7 @@ export function RewardsPage() {
     <div className="space-y-6 px-4 pb-8 pt-4">
       <header className="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-navy-900 via-navy-800 to-jays-700 p-5">
         <p className="text-sm font-medium text-silver-300">Rewards</p>
-        <h1 className="mt-2 text-2xl font-bold text-white">One Fan. Two Teams. More Ways to Earn.</h1>
+        <h1 className="mt-2 font-display text-2xl font-semibold uppercase tracking-tight text-white">One Fan. Two Teams. More Ways to Earn.</h1>
         <div className="mt-5 flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-black/15 p-4">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full border border-accent-gold/30 bg-accent-gold/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-accent-gold">
@@ -129,7 +129,7 @@ export function RewardsPage() {
       <section data-tour="active-missions" className="space-y-4">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <h2 className="text-lg font-semibold text-white">Active missions</h2>
+            <h2 className="font-display text-lg font-semibold uppercase tracking-tight text-white">Active missions</h2>
             <p className="text-sm text-silver-400">Complete fan actions to unlock more points.</p>
           </div>
           <div className="inline-flex items-center gap-2 rounded-full bg-white/5 px-3 py-1 text-xs text-silver-300">
@@ -149,7 +149,7 @@ export function RewardsPage() {
         <div className="flex items-center gap-2">
           <Gift size={18} className="text-accent-gold" />
           <div>
-            <h2 className="text-lg font-semibold text-white">Available rewards</h2>
+            <h2 className="font-display text-lg font-semibold uppercase tracking-tight text-white">Available rewards</h2>
             <p className="text-sm text-silver-400">Use your points on perks, merch, and experiences.</p>
           </div>
         </div>
@@ -170,7 +170,7 @@ export function RewardsPage() {
         <div className="flex items-center gap-2">
           <Wallet size={18} className="text-accent-gold" />
           <div>
-            <h2 className="text-lg font-semibold text-white">Rewards wallet</h2>
+            <h2 className="font-display text-lg font-semibold uppercase tracking-tight text-white">Rewards wallet</h2>
             <p className="text-sm text-silver-400">Recent redemptions and point activity.</p>
           </div>
         </div>
@@ -200,7 +200,7 @@ export function RewardsPage() {
         <div className="flex items-center gap-2">
           <ArrowUpRight size={18} className="text-accent-gold" />
           <div>
-            <h2 className="text-lg font-semibold text-white">Illustrative partner content</h2>
+            <h2 className="font-display text-lg font-semibold uppercase tracking-tight text-white">Illustrative partner content</h2>
             <p className="text-sm text-silver-400">A sample of why personalized offers can feel relevant.</p>
           </div>
         </div>

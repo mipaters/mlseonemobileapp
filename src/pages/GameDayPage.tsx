@@ -145,7 +145,7 @@ export function GameDayPage() {
         <div className="flex items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent-gold">Mobile Game-Day Mode</p>
-            <h1 className="mt-2 text-2xl font-bold text-white">{teamInfo.name}</h1>
+            <h1 className="mt-2 font-display text-2xl font-semibold uppercase tracking-tight text-white">{teamInfo.name}</h1>
             <p className="mt-1 text-sm text-silver-200">vs {game.opponent}</p>
           </div>
           <div className="flex flex-col items-end gap-2">

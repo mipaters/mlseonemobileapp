@@ -8,6 +8,7 @@ import { Toast } from "../ui/Toast";
 import { AppRoutes } from "../../routes/AppRoutes";
 import { useAppState } from "../../store/AppState";
 import { MIKE_PROFILE } from "../../data/profile";
+import mlseLogo from "../../assets/mlse-logo.png";
 
 function TopBar() {
   const navigate = useNavigate();
@@ -17,11 +18,12 @@ function TopBar() {
 
   return (
     <header className="flex items-center justify-between px-6 py-3 border-b border-white/10 bg-navy-900/80 backdrop-blur">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
+        <img src={mlseLogo} alt="MLSE" className="h-9 w-9 rounded-md" />
         <span className="text-lg font-extrabold tracking-tight text-white">
           MLSE <span className="text-accent-gold">ONE</span>
         </span>
-        <span className="ml-3 text-xs text-silver-500">Presentation mode · {MIKE_PROFILE.name}</span>
+        <span className="ml-1 text-xs text-silver-500">Presentation mode · {MIKE_PROFILE.name}</span>
       </div>
       <div className="flex items-center gap-2">
         <button

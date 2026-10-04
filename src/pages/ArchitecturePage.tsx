@@ -47,7 +47,7 @@ function NodeDetail({ node }: { node: ArchitectureNode }) {
     <div className="space-y-4">
       <div className="rounded-3xl border border-accent-gold/20 bg-accent-gold/10 p-4">
         <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-gold">{node.layer} layer</p>
-        <h3 className="mt-2 text-2xl font-bold text-white">{node.name}</h3>
+        <h3 className="mt-2 font-display text-2xl font-semibold uppercase tracking-tight text-white">{node.name}</h3>
       </div>
 
       <DetailField label="Purpose" value={node.purpose} />
@@ -79,7 +79,7 @@ export function ArchitecturePage() {
 
       <header className="rounded-[28px] border border-white/10 bg-gradient-to-br from-navy-900 via-navy-800 to-leafs-700/20 p-5">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-accent-gold">Illustrative architecture</p>
-        <h1 className={`${isDesktop ? "mt-3 text-4xl" : "mt-3 text-3xl"} font-bold text-white`}>
+        <h1 className={`${isDesktop ? "mt-3 text-4xl" : "mt-3 text-3xl"} font-display font-semibold uppercase tracking-tight text-white`}>
           Illustrative Microsoft Target Architecture
         </h1>
         <p className="mt-3 text-sm text-silver-300">
@@ -120,7 +120,7 @@ export function ArchitecturePage() {
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-gold">{layer.id}</p>
-                  <h2 className="mt-2 text-xl font-bold text-white">{layer.title}</h2>
+                  <h2 className="mt-2 font-display text-xl font-semibold uppercase tracking-tight text-white">{layer.title}</h2>
                 </div>
                 <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-silver-300">
                   {layer.nodeIds.length} nodes

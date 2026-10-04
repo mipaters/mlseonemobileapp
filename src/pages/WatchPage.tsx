@@ -22,6 +22,7 @@ import { Button } from "../components/ui/Button";
 import { ContentCard } from "../components/ui/ContentCard";
 import { ProgressBar } from "../components/ui/ProgressBar";
 import { ScrollRow } from "../components/ui/ScrollRow";
+import dailyRecapBackground from "../assets/vladdy-jays-recap-background.jpg";
 
 const DAILY_RECAP_ID = "daily-recap";
 const TOTAL_RECAP_SECONDS = DAILY_RECAP_CHAPTERS.length * 60;
@@ -124,17 +125,19 @@ export function WatchPage() {
     >
       <div className="relative overflow-hidden">
         <div
-          className={`relative flex items-end overflow-hidden bg-gradient-to-br from-leafs-700 via-navy-900 to-jays-700 ${
+          className={`relative flex items-end overflow-hidden bg-cover bg-center ${
             isFullScreen ? "min-h-[46vh]" : "min-h-[17rem]"
           }`}
+          style={{ backgroundImage: `url(${dailyRecapBackground})` }}
         >
+          <div className="absolute inset-0 bg-black/35" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.18),_transparent_38%),radial-gradient(circle_at_bottom_left,_rgba(255,255,255,0.14),_transparent_28%)]" />
           <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/60 to-transparent" />
 
           <div className="relative z-10 flex w-full items-end justify-between p-5">
             <div className="max-w-[75%]">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-gold">Featured Daily Recap</p>
-              <h2 className="mt-2 text-2xl font-bold text-white">Your Daily Toronto Sports Recap</h2>
+              <h2 className="mt-2 font-display text-2xl font-semibold uppercase tracking-tight text-white">Your Daily Toronto Sports Recap</h2>
               <p className="mt-2 text-sm text-silver-200">One recap built around the teams and players you care about.</p>
             </div>
 
@@ -238,8 +241,8 @@ export function WatchPage() {
         <div className="rounded-3xl border border-accent-gold/20 bg-gradient-to-br from-accent-gold/15 via-navy-900 to-jays-700/20 p-4">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-gold">SportsIQ Builder</p>
-              <h2 className="mt-2 text-xl font-bold text-white">Build My Highlight Reel</h2>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-gold">Copilot Builder</p>
+              <h2 className="mt-2 font-display text-xl font-semibold uppercase tracking-tight text-white">Build My Highlight Reel</h2>
               <p className="mt-2 text-sm text-silver-300">
                 Create a reel around {matthews} goals, {vladdy} power moments, or both.
               </p>
@@ -257,12 +260,12 @@ export function WatchPage() {
           <div className="flex items-start justify-between gap-3">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-gold">Why this recap was created for Mike</p>
-              <h2 className="mt-2 text-lg font-semibold text-white">Built around Mike&apos;s Toronto fan DNA</h2>
+              <h2 className="mt-2 font-display text-lg font-semibold uppercase tracking-tight text-white">Built around Mike&apos;s Toronto fan DNA</h2>
             </div>
             <Sparkles size={18} className="text-accent-gold" />
           </div>
           <p className="mt-3 text-sm text-silver-300">
-            Mike follows both the Leafs and Jays, with strong affinity scores for each. SportsIQ prioritized {matthews} and {vladdy},
+            Mike follows both the Leafs and Jays, with strong affinity scores for each. Copilot prioritized {matthews} and {vladdy},
             blended team-wide momentum, and balanced short-form recap content with what&apos;s next.
           </p>
           <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
@@ -325,7 +328,7 @@ export function WatchPage() {
       <section className="mt-5 grid gap-3 px-4">
         <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-gold">Recommended Reward</p>
-          <h2 className="mt-2 text-lg font-semibold text-white">Redeem a content boost for your next recap</h2>
+          <h2 className="mt-2 font-display text-lg font-semibold uppercase tracking-tight text-white">Redeem a content boost for your next recap</h2>
           <p className="mt-2 text-sm text-silver-300">
             Use your Platinum balance to unlock bonus angles, alternate commentary, and premium recap packaging.
           </p>
@@ -336,9 +339,9 @@ export function WatchPage() {
 
         <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-gold">Relevant Ticket Opportunity</p>
-          <h2 className="mt-2 text-lg font-semibold text-white">Turn today&apos;s recap into a live Toronto sports weekend</h2>
+          <h2 className="mt-2 font-display text-lg font-semibold uppercase tracking-tight text-white">Turn today&apos;s recap into a live Toronto sports weekend</h2>
           <p className="mt-2 text-sm text-silver-300">
-            SportsIQ spotted upcoming Leafs and Jays home dates that fit Mike&apos;s usual watch-and-attend behaviour.
+            Copilot spotted upcoming Leafs and Jays home dates that fit Mike&apos;s usual watch-and-attend behaviour.
           </p>
           <Button size="md" variant="secondary" className="mt-4 w-full" onClick={() => navigate("/gameday")}>
             View Ticket Options <ChevronRight size={16} className="ml-1 inline" />

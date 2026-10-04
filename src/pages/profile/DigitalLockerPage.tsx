@@ -40,7 +40,7 @@ export function DigitalLockerPage() {
     <div className="relative space-y-8 px-4 pb-24 pt-4">
       <header className="rounded-3xl border border-white/10 bg-gradient-to-br from-navy-900 via-navy-800 to-leafs-700 p-5">
         <p className="text-sm font-medium text-silver-300">Profile</p>
-        <h1 className="mt-2 text-2xl font-bold text-white">Digital Locker</h1>
+        <h1 className="mt-2 font-display text-2xl font-semibold uppercase tracking-tight text-white">Digital Locker</h1>
         <p className="mt-2 text-sm text-silver-400">
           Your fan collectibles, past purchases, and personalized gear recommendations in one place.
         </p>

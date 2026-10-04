@@ -85,7 +85,7 @@ export function FanDnaPage() {
     <div className="relative space-y-4 px-4 pb-8 pt-4">
       <header className="space-y-1">
         <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent-gold">SportsIQ Fan Intelligence</p>
-        <h1 className="text-2xl font-bold text-white">Mike&apos;s Fan DNA</h1>
+        <h1 className="font-display text-2xl font-semibold uppercase tracking-tight text-white">Mike&apos;s Fan DNA</h1>
         <p className="text-sm text-silver-400">A living sports profile built from every consented interaction.</p>
       </header>
 

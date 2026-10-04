@@ -60,7 +60,7 @@ export function PrivacyPage() {
     <div className="space-y-4 px-4 pb-8 pt-4">
       <header className="space-y-1">
         <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent-gold">Privacy &amp; Data Controls</p>
-        <h1 className="text-2xl font-bold text-white">Privacy &amp; Data</h1>
+        <h1 className="font-display text-2xl font-semibold uppercase tracking-tight text-white">Privacy &amp; Data</h1>
         <p className="text-sm text-silver-400">Choose how SportsIQ can use Mike&apos;s consented demo data across the MLSE One experience.</p>
       </header>
 

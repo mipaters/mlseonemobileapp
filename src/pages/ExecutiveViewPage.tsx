@@ -111,7 +111,7 @@ export function ExecutiveViewPage() {
                 Illustrative demo data
               </span>
             </div>
-            <h1 className={`${isDesktop ? "mt-4 text-4xl" : "mt-3 text-3xl"} font-bold text-white`}>
+            <h1 className={`${isDesktop ? "mt-4 text-4xl" : "mt-3 text-3xl"} font-display font-semibold uppercase tracking-tight text-white`}>
               MLSE One Executive View
             </h1>
             <p className="mt-3 max-w-3xl text-sm leading-6 text-silver-300">
@@ -163,7 +163,7 @@ export function ExecutiveViewPage() {
           <div className="flex items-start justify-between gap-3">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-gold">Journey Health</p>
-              <h2 className="mt-2 text-2xl font-bold text-white">Fan Engagement Funnel</h2>
+              <h2 className="mt-2 font-display text-2xl font-semibold uppercase tracking-tight text-white">Fan Engagement Funnel</h2>
               <p className="mt-2 text-sm text-silver-400">
                 Illustrative progression from known fan to multi-team relationship.
               </p>
@@ -180,7 +180,7 @@ export function ExecutiveViewPage() {
         >
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-gold">Commercial Mix</p>
-            <h2 className="mt-2 text-2xl font-bold text-white">Revenue Value Pools</h2>
+            <h2 className="mt-2 font-display text-2xl font-semibold uppercase tracking-tight text-white">Revenue Value Pools</h2>
             <p className="mt-2 text-sm text-silver-400">
               Sample distribution of where coordinated personalization can create value.
             </p>
@@ -195,7 +195,7 @@ export function ExecutiveViewPage() {
         <div className="flex items-center justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-gold">Illustrative value narrative</p>
-            <h2 className="mt-2 text-2xl font-bold text-white">Business Outcomes</h2>
+            <h2 className="mt-2 font-display text-2xl font-semibold uppercase tracking-tight text-white">Business Outcomes</h2>
           </div>
           {isDesktop && (
             <Button variant="secondary" onClick={() => navigate("/executive/architecture")}>
@@ -226,7 +226,7 @@ export function ExecutiveViewPage() {
         className="rounded-[28px] border border-accent-gold/20 bg-gradient-to-br from-accent-gold/10 via-navy-900 to-jays-700/10 p-6"
       >
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-gold">Executive close</p>
-        <h2 className={`${isDesktop ? "mt-3 text-4xl" : "mt-3 text-3xl"} max-w-3xl font-bold text-white`}>
+        <h2 className={`${isDesktop ? "mt-3 text-4xl" : "mt-3 text-3xl"} max-w-3xl font-display font-semibold uppercase tracking-tight text-white`}>
           One fan. Two teams. One intelligent relationship.
         </h2>
         <p className="mt-3 max-w-2xl text-sm leading-6 text-silver-300">

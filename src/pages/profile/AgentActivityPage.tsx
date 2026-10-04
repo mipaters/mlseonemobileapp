@@ -122,7 +122,7 @@ export function AgentActivityPage() {
     <div className="space-y-4 px-4 pb-8 pt-4">
       <header className="space-y-1">
         <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent-gold">SportsIQ Agent Feed</p>
-        <h1 className="text-2xl font-bold text-white">Agent Activity</h1>
+        <h1 className="font-display text-2xl font-semibold uppercase tracking-tight text-white">Agent Activity</h1>
         <p className="text-sm text-silver-400">{headerStatus}</p>
       </header>
 

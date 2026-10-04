@@ -1,14 +1,16 @@
 import { Bell } from "lucide-react";
 import { MIKE_PROFILE } from "../../data/profile";
+import mlseLogo from "../../assets/mlse-logo.png";
 
-export function MobileHeader({ onAvatarClick }: { onAvatarClick: () => void }) {
+export function MobileHeader({ onAvatarClick, hideLogo }: { onAvatarClick: () => void; hideLogo?: boolean }) {
   return (
     <header
       className="safe-top flex items-center justify-between px-4 py-3 bg-navy-900/95 backdrop-blur border-b border-white/10 sticky top-0 z-30"
       data-tour="profile"
     >
       <div className="flex items-center gap-2">
-        <span className="text-base font-extrabold tracking-tight text-white">
+        {!hideLogo && <img src={mlseLogo} alt="MLSE" className="h-8 w-8 rounded-md" />}
+        <span className="text-lg font-extrabold tracking-tight text-white">
           MLSE <span className="text-accent-gold">ONE</span>
         </span>
       </div>
