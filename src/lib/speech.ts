@@ -89,7 +89,7 @@ export async function speakText(text: string): Promise<void> {
   const { token, region } = await getSpeechToken();
 
   const speechConfig = SpeechSDK.SpeechConfig.fromAuthorizationToken(token, region);
-  speechConfig.speechSynthesisVoiceName = "en-US-AvaMultilingualNeural";
+  speechConfig.speechSynthesisVoiceName = "en-US-AndrewMultilingualNeural";
 
   const synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig);
 
