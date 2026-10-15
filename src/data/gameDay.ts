@@ -2,9 +2,9 @@ import type { Game, Ticket, SeatUpgradeOption, FoodOption } from "../types";
 
 export const GAMES: Game[] = [
   {
-    id: "leafs-vs-bos",
+    id: "leafs-vs-mtl",
     teamId: "leafs",
-    opponent: "Boston Bruins",
+    opponent: "Montreal Canadiens",
     dateLabel: "Saturday",
     timeLabel: "7:00 PM",
     venue: "Scotiabank Arena",
@@ -25,7 +25,7 @@ export const TICKETS: Ticket[] = [
   {
     id: "ticket-leafs",
     teamId: "leafs",
-    gameId: "leafs-vs-bos",
+    gameId: "leafs-vs-mtl",
     section: "114",
     row: "12",
     seat: "7",
